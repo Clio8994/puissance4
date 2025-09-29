@@ -67,6 +67,22 @@ class grilleJeu {
                 }
             }
         }
+        // Vérification diagonale descendante
+        for (let i = 0; i <= this.colonne - 4; i++) {
+            for (let o = 0; o <= this.ligne - 4; o++) {
+                if ( this.grille[i][o] === joueur && this.grille[i+1][o+1] === joueur && this.grille[i+2][o+2] === joueur && this.grille[i+3][o+3] === joueur ) {
+                    return true;
+                }
+            }
+        }
+        // Vérification diagonale montante
+        for (let i = 0; i <= this.colonne - 4; i++) {
+            for (let o = 3; o < this.ligne; o++) {
+                if ( this.grille[i][o] === joueur && this.grille[i+1][o-1] === joueur && this.grille[i+2][o-2] === joueur && this.grille[i+3][o-3] === joueur ) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
