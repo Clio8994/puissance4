@@ -1,5 +1,5 @@
 class grilleJeu {
-    private grille ;
+    private grille: string[][];
     private colonne = 7;
     private ligne = 6;
 
@@ -14,7 +14,7 @@ class grilleJeu {
             for (let o = 0; o < this.ligne; o++){
                 this.grille[i][o] = ".";
             }
-    }
+        }
     }
 
     afficherGrille(): void{
@@ -37,6 +37,42 @@ class grilleJeu {
         console.log(lignes.join('\n'));
     }
 
+    jouerCoup(col: number, joueur: string): boolean {
+        if (col < 0 || col >= this.colonne)
+            return false;
+        
+        for (let o = this.ligne - 1; o >= 0; o--) {
+            if (this.grille[col][o] === ".") {
+                this.grille[col][o] = joueur;
+                return true;
+            }
+        }
+        return false; 
+    }
 }
+
 let jeu = new grilleJeu();
-jeu.afficherGrille();
+let joueurActuel = "X";
+
+while (true) {
+    jeu.afficherGrille();
+    let entree = prompt(`Joueur ${joueurActuel}, entrez le numéro de colonne (0-${jeu["colonne"] - 1}) :`);
+    if (entree === null) {
+        console.log("Partie arrêtée.");
+        break;
+    }
+    let col = parseInt(entree);
+    if (isNaN(col)) {
+        console.log("Entrée incorrect, entrer un nombre valide.");
+        continue;
+    }
+    if (jeu.jouerCoup(col, joueurActuel)) {
+        if (joueurActuel === "X") {
+            joueurActuel = "O";
+        } else {
+            joueurActuel = "X";
+        }
+    } else {
+        console.log("Coup impossible, colonne remplis ou nombre trop grand / petit.");
+    }
+}
