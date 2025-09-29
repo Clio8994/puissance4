@@ -51,9 +51,18 @@ class grilleJeu {
     }
 
     verifierVictoire(joueur: string): boolean {
+        // Vérification horizontale
         for (let o = 0; o < this.ligne; o++) {
             for (let i = 0; i <= this.colonne - 4; i++) {
                 if ( this.grille[i][o] === joueur && this.grille[i+1][o] === joueur && this.grille[i+2][o] === joueur && this.grille[i+3][o] === joueur ) {
+                    return true;
+                }
+            }
+        }
+        // Vérification verticale
+        for (let i = 0; i < this.colonne; i++) {
+            for (let o = 0; o <= this.ligne - 4; o++) {
+                if ( this.grille[i][o] === joueur && this.grille[i][o+1] === joueur && this.grille[i][o+2] === joueur && this.grille[i][o+3] === joueur ) {
                     return true;
                 }
             }
