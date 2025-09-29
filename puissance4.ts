@@ -49,6 +49,17 @@ class grilleJeu {
         }
         return false; 
     }
+
+    verifierVictoire(joueur: string): boolean {
+        for (let o = 0; o < this.ligne; o++) {
+            for (let i = 0; i <= this.colonne - 4; i++) {
+                if ( this.grille[i][o] === joueur && this.grille[i+1][o] === joueur && this.grille[i+2][o] === joueur && this.grille[i+3][o] === joueur ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
 
 let jeu = new grilleJeu();
@@ -67,6 +78,11 @@ while (true) {
         continue;
     }
     if (jeu.jouerCoup(col, joueurActuel)) {
+        if (jeu.verifierVictoire(joueurActuel)) {
+            jeu.afficherGrille();
+            console.log("Le joueur " + joueurActuel + " a gagné !");
+            break;
+        }
         if (joueurActuel === "X") {
             joueurActuel = "O";
         } else {
