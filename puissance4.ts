@@ -101,35 +101,41 @@ class grilleJeu {
 let jeu = new grilleJeu();
 let joueurActuel = "X";
 
-while (true) {
+function tourDeJeu() {
     jeu.afficherGrille();
-    let entree = prompt(`Joueur ${joueurActuel}, entrez le numéro de colonne (0-${jeu["colonne"] - 1}) :`);
-    if (entree === null) {
-        console.log("Partie arrêtée.");
-        break;
-    }
-    let col = parseInt(entree);
-    if (isNaN(col)) {
-        console.log("Entrée incorrect, entrer un nombre valide.");
-        continue;
-    }
-    if (jeu.jouerCoup(col, joueurActuel)) {
-        if (jeu.verifierVictoire(joueurActuel)) {
-            jeu.afficherGrille();
-            console.log("Le joueur " + joueurActuel + " a gagné !");
-            break;
+    setTimeout(() => {
+        let entree = prompt(`Joueur ${joueurActuel}, entrez le numéro de colonne (0-${jeu["colonne"] - 1}) :`);
+        if (entree === null) {
+            console.log("Partie arrêtée.");
+            return;
         }
-        if (jeu.estGrillePleine()) {
-            jeu.afficherGrille();
-            console.log("Grille remplie, match nul !");
-            break;
+        let col = parseInt(entree);
+        if (isNaN(col)) {
+            console.log("Entrée incorrect, entrer un nombre valide.");
+            tourDeJeu();
+            return;
         }
-        if (joueurActuel === "X") {
-            joueurActuel = "O";
+        if (jeu.jouerCoup(col, joueurActuel)) {
+            if (jeu.verifierVictoire(joueurActuel)) {
+                jeu.afficherGrille();
+                console.log("Le joueur " + joueurActuel + " a gagné !");
+                return;
+            }
+            if (jeu.estGrillePleine()) {
+                jeu.afficherGrille();
+                console.log("Grille remplie, match nul !");
+                return;
+            }
+            if (joueurActuel === "X") {
+                joueurActuel = "O";
+            } else {
+                joueurActuel = "X";
+            }
         } else {
-            joueurActuel = "X";
+            console.log("Coup impossible, colonne remplis ou nombre trop grand / petit.");
         }
-    } else {
-        console.log("Coup impossible, colonne remplis ou nombre trop grand / petit.");
-    }
+        tourDeJeu();
+    }, 1000);
 }
+
+tourDeJeu();
