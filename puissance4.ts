@@ -85,6 +85,17 @@ class grilleJeu {
         }
         return false;
     }
+
+    estGrillePleine(): boolean {
+        for (let i = 0; i < this.colonne; i++) {
+            for (let o = 0; o < this.ligne; o++) {
+                if (this.grille[i][o] === ".") {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
 
 let jeu = new grilleJeu();
@@ -106,6 +117,11 @@ while (true) {
         if (jeu.verifierVictoire(joueurActuel)) {
             jeu.afficherGrille();
             console.log("Le joueur " + joueurActuel + " a gagné !");
+            break;
+        }
+        if (jeu.estGrillePleine()) {
+            jeu.afficherGrille();
+            console.log("Grille remplie, match nul !");
             break;
         }
         if (joueurActuel === "X") {
